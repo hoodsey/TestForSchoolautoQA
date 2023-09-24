@@ -10,12 +10,12 @@ public class Main {
     выходгые данные: resultArr = отсортированный массив с масиванми
     */
     public static int[][] AlgorithmArray(int n) {
-        int maxSize = 10; // максимальное количество эл-тов в массив
+        int maxSize = 20; // максимальное количество эл-тов в массив
         Random random = new Random();
         IntStream generateSizeArr = random.ints(1, maxSize).distinct().limit(n);  // запись в поток уникальных размеров массивов в диапазон с 1 до maxSize
         Iterator<Integer> iteratorArr = generateSizeArr.iterator(); // преобразование в Iterator для перебора по массиву размеров
 
-        int indexItr = 0; // индекс элемента
+        int indexItr = 0; // индекс элементаS
         int[][] resultArr = new int[n][]; // инициализация двумерного массива
 
         while (iteratorArr.hasNext()) { // перебор по элементам каждого массива
