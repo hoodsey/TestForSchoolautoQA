@@ -1,44 +1,43 @@
 import java.util.Random;
-import java.util.List;
+import java.util.*;
 import java.util.Iterator;
 import java.util.stream.IntStream;
-
+import java.util.Collections;
 
 public class Main {
-
-    public static void Massive( int n) {
-        int maxSize = 10;
-
+    /*функция создания и соритровки массива по алгоритму
+    входные данные : n - натуральное число для генерации массивов
+    выходгые данные: resultArr = отсортированный массив с масиванми
+    */
+    public static int[][] AlgorithmArray(int n) {
+        int maxSize = 10; // максимальное количество эл-тов в массив
         Random random = new Random();
-        IntStream ds_count = random.ints(1, maxSize).distinct().limit(n);  // создание уникальных размеров массивов в диапазон с 1 до 10
-        // ds_count.forEach( );
-        // int[] intArray = ds_count.toArray();
+        IntStream generateSizeArr = random.ints(1, maxSize).distinct().limit(n);  // запись в поток уникальных размеров массивов в диапазон с 1 до maxSize
+        Iterator<Integer> iteratorArr = generateSizeArr.iterator(); // преобразование в Iterator для перебора по массиву размеров
 
-        System.out.println("Stream ds_count:");
-        Iterator<Integer> it1 = ds_count.iterator();
-        int k = 0; //
-        while (it1.hasNext()) { // перебор по потоку из n массивов
-            IntStream ds = random.ints().distinct().limit(it1.next());  // создание уникальных размеров массивов в диапазон с 1 до 10
-            Iterator<Integer> it2 = ds.iterator();
-            System.out.println("Маcсив " + k);
+        int indexItr = 0; // индекс элемента
+        int[][] resultArr = new int[n][]; // инициализация двумерного массива
 
-            while (it2.hasNext()) {
-                // List<Integer> intArray = ds.toArray();
-
-                System.out.println(it2.next());
-
+        while (iteratorArr.hasNext()) { // перебор по элементам каждого массива
+            IntStream generateArr = random.ints().distinct().limit(iteratorArr.next()).sorted();  // создание уникальных размеров массивов в диапазон с 1 до 10 и их сортировка по возврастанию
+            int[] arr = generateArr.toArray(); // преобразование в тип int
+            if (indexItr % 2 == 1) { // условие сортировки по убыванию
+                arr = Arrays.stream(arr).boxed().sorted(Collections.reverseOrder()).mapToInt(Integer::intValue).toArray(); // сортировка по убыванию  для чётных массивов
             }
-            System.out.println("");
-            k=k+1;
-
-
+            resultArr[indexItr] = arr; // запись в итоговый массив
+            indexItr = indexItr + 1;
         }
+        return resultArr;
     }
 
     public static void main(String[] args) {
-        int n = 5;
-        Massive(n);
+        int n = 10; //  n = натуральное число, количество массивов
+        int[][] result = AlgorithmArray(n); // вызов функции алгоритма
+
+        // вывод в консоль результат вызова функции
+        System.out.println("Результат работы алгоритма:");
+        for (int[] row : result) {
+            System.out.println(Arrays.toString(row));
+        }
     }
-
-
 }
